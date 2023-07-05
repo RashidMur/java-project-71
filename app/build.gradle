@@ -12,6 +12,7 @@ repositories {
 
 compileJava {
     options.release = 17
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
 application {
@@ -19,8 +20,11 @@ application {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation platform('org.junit:junit-bom:5.9.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    implementation 'info.picocli:picocli:4.7.3'
+    compileOnly 'info.picocli:picocli-codegen:4.7.4'
 }
 
 test {
