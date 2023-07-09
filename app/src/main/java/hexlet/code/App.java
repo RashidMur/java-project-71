@@ -1,25 +1,40 @@
 package hexlet.code;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
-
 import java.util.concurrent.Callable;
 
-@Command(name = "gendiff",
+@CommandLine.Command(name = "gendiff",
         description = "Compares two configuration files and shows a difference.")
-public final class App  {
 
-    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
-    boolean versionInfoRequested;
+public final class App implements Callable<Integer> {
+    @Override
+    public Integer call() throws Exception {
+        System.out.println(Differ.generate(filepath1, filepath2));
+        return null;
+    }
+    @CommandLine.Option(names = {"-f", "--format"}, defaultValue = "stylish",
+            description = " output format [default: ${DEFAULT-VALUE}]",  paramLabel = "format")
+    private String format;
 
-    @Option(names = {"-h", "--help"}, usageHelp = true, description = "Show this help message and exit.")
+    @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true,
+            description = "Show this @|fg(blue) help|@ message and exit.")
     boolean usageHelpRequested;
 
+    @CommandLine.Option(names = {"-V", "--version"}, versionHelp = true,
+            description = "Print version information and exit.")
+    boolean versionInfoRequested;
+
+    @CommandLine.Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
+    private static String filepath1;
+
+    @CommandLine.Parameters(index = "1", description = "path to second file", paramLabel = "filepath2")
+    private static String filepath2;
+
     public static void main(String[] args) {
+        App app = CommandLine.populateCommand(new App(), args);
         CommandLine commandLine = new CommandLine(new App());
         commandLine.parseArgs(args);
+
         if (commandLine.isUsageHelpRequested()) {
             commandLine.usage(System.out);
             return;
@@ -27,6 +42,7 @@ public final class App  {
             commandLine.printVersionHelp(System.out);
             return;
         }
-        System.out.println("Hello World!");
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 }
