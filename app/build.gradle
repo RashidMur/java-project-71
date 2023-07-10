@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'hexlet.code'
@@ -22,12 +24,26 @@ application {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.2')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
 
     implementation 'info.picocli:picocli:4.7.3'
     compileOnly 'info.picocli:picocli-codegen:4.7.4'
+    testImplementation('org.assertj:assertj-core:3.24.2')
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = false
+    }
+}
+checkstyle {
+    toolVersion '9.2.1'
 }
