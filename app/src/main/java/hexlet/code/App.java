@@ -10,7 +10,7 @@ public final class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         System.out.println(Differ.generate(filepath1, filepath2));
-        return null;
+        return 0;
     }
     @CommandLine.Option(names = {"-f", "--format"}, defaultValue = "stylish",
             description = " output format [default: ${DEFAULT-VALUE}]",  paramLabel = "format")
