@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Stylish;
+import hexlet.code.formatters.Plain;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -7,11 +10,12 @@ import java.util.Map;
 public class Formatter {
     public static String formatStyle(
             List<Map<String, Object>> differences, String format) throws IOException {
-        switch (format) {
-            case "stylish":
-                return Stylish.formatStylish(differences);
-            default:
-                throw new Error("Unknown format: " + format);
+        if (format.equals("stylish")) {
+            return Stylish.getStylish(differences);
+        } else if (format.equals("plain")) {
+            return Plain.getPlain(differences);
+        }    else {
+            throw new Error("Unknown format: " + format);
         }
     }
 }
