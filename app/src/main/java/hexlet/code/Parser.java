@@ -1,33 +1,32 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import java.util.Map;
 
+
+
 public class Parser {
-    public static Map<String, Object> readFile(String filepath) throws Exception {
-        Map<String, Object> map = new HashMap<>();
+    public static Map<String, Object> readFile(String content, String dataFormat) throws Exception {
+        return switch (dataFormat) {
+            case "yml", "yaml" -> parseYaml(content);
+            case "json" -> parseJson(content);
+            default -> throw new Exception("Unknown format: '" + dataFormat + "'");
+        };
+    }
 
-        Path path = Paths.get(filepath)// создается объект Path, который представляет путь к файлу, указанному в аргументе метода.
-                .toAbsolutePath() // Метод toAbsolutePath() возвращает абсолютный путь к файлу,
-                .normalize(); // а метод normalize() приводит путь к каноническому виду.
-        String content = Files.readString(path); // читаем файл path и записываем в строку content
-        // в зависимости от расширения файла, создается объект ObjectMapper класса Jackson, который будет использоваться
-        // для десериализации содержимого файла. Если файл имеет расширение ".json", то создается объект ObjectMapper,
-        // а если расширение ".yml", то создается объект YAMLMapper.
+    public static Map<String, Object> parseJson(String json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, new TypeReference<>() {
+        });
+    }
 
-        if (filepath.endsWith("json")) {
-            ObjectMapper mapper = new ObjectMapper();
-            map = mapper.readValue(content, new TypeReference<Map<String, Object>>() { });
-        } else if (filepath.endsWith("yml")) {
-            ObjectMapper mapper = new YAMLMapper();
-            map  = mapper.readValue(content, new TypeReference<Map<String, Object>>() { });
-        }
-        return map;
+    public static Map<String, Object> parseYaml(String yaml) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        return mapper.readValue(yaml, new TypeReference<>() {
+        });
     }
 }
