@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.formatters.Stylish;
 import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Json;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +15,9 @@ public class Formatter {
             return Stylish.getStylish(differences);
         } else if (format.equals("plain")) {
             return Plain.getPlain(differences);
-        }    else {
+        } else if (format.equals("json")) {
+            return Json.getJson(differences);
+        } else {
             throw new Error("Unknown format: " + format);
         }
     }
