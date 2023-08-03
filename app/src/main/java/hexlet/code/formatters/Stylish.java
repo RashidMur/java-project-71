@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Stylish {
     public static String getStylish(List<Map<String, Object>> differences) {
-        StringBuilder result = new StringBuilder("\n{\n");
+        StringBuilder result = new StringBuilder("{\n");
         for (Map<String, Object> diffs : differences) {
             switch (diffs.get("status").toString()) {
                 case "removed" -> result.append("  - ").append(diffs.get("key")).append(": ")
