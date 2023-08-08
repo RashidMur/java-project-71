@@ -10,11 +10,11 @@ import java.util.Map;
 
 
 public class Parser {
-    public static Map<String, Object> readFile(String content, String dataFormat) throws Exception {
+    public static Map<String, Object> readFile(String content, String dataFormat) throws JsonProcessingException{
         return switch (dataFormat) {
             case "yml", "yaml" -> parseYaml(content);
             case "json" -> parseJson(content);
-            default -> throw new Exception("Unknown format: '" + dataFormat + "'");
+            default -> throw new RuntimeException("Unknown format: '" + dataFormat + "'");
         };
     }
 
