@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class DifferTests {
+class DifferTests {
     private static final String PATH1 = "src/test/resources/fileNumb1.";
     private static final String PATH2 = "src/test/resources/fileNumb2.";
     private static String expectedStylish;
