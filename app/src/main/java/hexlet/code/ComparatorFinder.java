@@ -1,6 +1,12 @@
 package hexlet.code;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ComparatorFinder {
     public static List<Map<String, Object>> differ(Map<String, Object> map1, Map<String, Object> map2) {
