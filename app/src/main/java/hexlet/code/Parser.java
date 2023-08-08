@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 public class Parser {
-    public static Map<String, Object> readFile(String content, String dataFormat) throws JsonProcessingException{
+    public static Map<String, Object> readFile(String content, String dataFormat) throws JsonProcessingException {
         return switch (dataFormat) {
             case "yml", "yaml" -> parseYaml(content);
             case "json" -> parseJson(content);

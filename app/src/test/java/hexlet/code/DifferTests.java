@@ -27,16 +27,16 @@ public class DifferTests {
         expectedPlain = readString("src/test/resources/expectedPlain");
         expectedJson = readString("src/test/resources/expectedJson");
     }
-    @ParameterizedTest
+    @ParameterizedTest(name = "Input {0} files - output wrong - format")
     @ValueSource (strings = {"json", "yml"})
-    public void wrongFilepath(String format) throws Exception {
+    public void wrongFilepath(String format) {
         String testFile1 = PATH1 + format;
         var thrown = catchThrowable(
                 () -> Differ.generate(testFile1, "")
         );
         assertThat(thrown).isInstanceOf(Exception.class);
     }
-    @ParameterizedTest
+    @ParameterizedTest(name = "Input {0} files - output stylish format")
     @ValueSource (strings = {"json", "yml"})
     public void testStylish(String format) throws Exception {
         String testFile1 = PATH1 + format;
@@ -44,7 +44,7 @@ public class DifferTests {
         assertEquals(expectedStylish, Differ.generate(testFile1, testFile2, "stylish"));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Input {0} files - output plain format")
     @ValueSource (strings = {"json", "yml"})
     public void testPlain(String format) throws Exception {
         String testFile1 = PATH1 + format;
@@ -52,14 +52,14 @@ public class DifferTests {
         assertEquals(expectedPlain, Differ.generate(testFile1, testFile2, "plain"));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Input {0} files - output json format")
     @ValueSource (strings = {"json", "yml"})
     public void testJson(String format) throws Exception {
         String testFile1 = PATH1 + format;
         String testFile2 = PATH2 + format;
         assertEquals(expectedJson, Differ.generate(testFile1, testFile2, "json"));
     }
-    @ParameterizedTest
+    @ParameterizedTest(name = "Input {0} files - output default format")
     @ValueSource (strings = {"json", "yml"})
     public void testGenerateDefault(String format) throws Exception {
         String testFile1 = PATH1 + format;
